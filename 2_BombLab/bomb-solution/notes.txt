@@ -1,0 +1,132 @@
+// for phase 1
+1-to print string which represented in hexa-decimal using gdb use command (x /s 0x......)
+
+// for phase 2
+1-you shouldn't go to line (instruction) which call explode bomb , so eax at first should=1
+2-so there will be for loop do an operation eax*2 , untill go out of loop when rbx=rbp (all six numbers compared)
+
+// for phase 3
+1-to print value stored in specific address use command (x 0x.....)
+2-to print value stored in specific register use command (x $register name)
+3-scanf in c return value which define input's numbers
+4-to skip steps of function (sscanf) use command (finish)
+hint:
+We know that the first number (now it has been copied to %rax) can be one of number in [0,1,2,3,4,5,6,7]. So scan the address [0x402470 + %rax * 8] :
+
+400f6a:	83 7c 24 08 07       	cmpl   $0x7,0x8(%rsp)
+400f6f:	77 3c                	ja     400fad <phase_3+0x6a>
+400f71:	8b 44 24 08          	mov    0x8(%rsp),%eax
+400f75:	ff 24 c5 70 24 40 00 	jmpq   *0x402470(,%rax,8)
+
+(gdb) x /x 0x402470 + 8 * 0  =>  0x402470:	0x00400f7c  => 0 0xcf
+(gdb) x /x 0x402470 + 8 * 1  =>  0x402478:	0x00400fb9  => 1 0x137
+(gdb) x /x 0x402470 + 8 * 2  =>  0x402480:	0x00400f83  => 2 0x2c3
+(gdb) x /x 0x402470 + 8 * 3  =>  0x402488:	0x00400f8a  => 3 0x100
+(gdb) x /x 0x402470 + 8 * 4  =>  0x402490:	0x00400f91  => 4 0x185
+(gdb) x /x 0x402470 + 8 * 5  =>  0x402498:	0x00400f98  => 5 0xce
+(gdb) x /x 0x402470 + 8 * 6  =>  0x4024a0:	0x00400f9f  => 6 0x2aa
+(gdb) x /x 0x402470 + 8 * 7  =>  0x4024a8:	0x00400fa6  => 7 0x147
+
+
+// for phase 4 
+it is easy just keep track func4 , there is more than one solution
+(a,0)
+
+
+// for phase 5 
+init eax=0
+rbx=rdi      //rdi contain string you should input(str)
+while(eax!=6)
+{
+    ecx=[rbx+rax]   // ecx=str[i]
+    rdx=ecx&0xf    //rdx may be 0,1,2,3,4.....,A,B,C,D,E,f
+    rdx=[rdx+0x4024b0]
+    //so rdx = [0x4024bX]  x=value represented in 4 bits only
+    // string stored in 0x4024b0 use command (x /s 0x....) ==> hash="maduiersnfotvbyl
+    eax++;
+}
+value stored in rdx should = flyers
+hash[?] = 'f' ==> hash[9]
+so value of rdx=str[0]&0xf ='f' //str[0] & 0xf = 9
+//str can be any char in which first 4 bit =9
+and so on..............
+
+// finally phase 6
+r13 = rsp;
+rsi = rsp;
+
+read_six_numbers(input,rsp); // array [a,b,c,d,e,f] start at rsp
+r14 = rsp;
+r12d = 0;
+while(true){
+    rbp = r13;
+    eax = &r13 - 1;
+
+    if(eax > 5) bomb(); // each number is not more than 6
+    else {
+        r12d++;
+        if(r12d < 6) {
+            ebx = r12d;
+            do {
+                if (&(rsp + 4 * ebx) == &rbp) // each number differs from others
+                    bomb();
+                else 
+                    ebx++;
+            } while(ebx <= 5)
+            r13 = r13 + 4;
+        } else{
+            break;
+        }
+    }    
+}
+
+rsi = 0;
+do () { // At 0x401197
+    ecx = &(rsp + rsi);
+    if(ecx > 1) {
+        eax = 1;
+        edx = 0x6032d0;
+        do {
+            rdx = &(rdx + 8); // At 0x401176
+            eax++;         
+        } while (eax < ecx)       
+    } else { // At 0x401183
+        edx = 0x6032d0;
+    }
+
+    /* address of the value of the linked list
+     * +8 is the address of next node
+     *
+     * rsp + 0x20 + 0x00 = 0x6032d0 + ((7 - a) - 1) * 16
+     * rsp + 0x20 + 0x08 = 0x6032d0 + ((7 - b) - 1) * 16
+     * rsp + 0x20 + 0x10 = 0x6032d0 + ((7 - c) - 1) * 16
+     * rsp + 0x20 + 0x18 = 0x6032d0 + ((7 - d) - 1) * 16
+     * rsp + 0x20 + 0x20 = 0x6032d0 + ((7 - e) - 1) * 16
+     * rsp + 0x20 + 0x28 = 0x6032d0 + ((7 - f) - 1) * 16
+     * */
+    &(rsp + 2 * rsi + 0x20) = rdx; // At 0x401188
+    rsi += 4;
+
+} while (rsi < 0x18)
+
+/* The original linked list
+ *
+ * Address based on num       Value          Next       num
+ * 0x6032d0                   0x10000014c    0x6032e0    6
+ * 0x6032e0                   0x2000000a8    0x6032f0    5
+ * 0x6032f0                   0x30000039c    0x603300    4 
+ * 0x603300                   0x4000002b3    0x603310    3 
+ * 0x603310                   0x5000001dd    0x603320    2 
+ * 0x603320                   0x6000001bb    0x000000    1
+ */
+
+
+ we wanted values be sorted 
+ so reoredr number 
+  Value         Next       num
+ 0x30000039c    0x603300    4
+ 0x4000002b3    0x603310    3
+ 0x5000001dd    0x603320    2 
+ 0x6000001bb    0x000000    1
+ 0x10000014c    0x6032e0    6
+ 0x2000000a8    0x6032f0    5
