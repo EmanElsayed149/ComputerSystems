@@ -1,5 +1,5 @@
 // for phase 1
-1-to print string which represented in hexa-decimal using gdb use command (x /s 0x......)
+1-to print string which represented in an spesific address  using gdb use command (x /s 0x......)
 
 // for phase 2
 1-you shouldn't go to line (instruction) which call explode bomb , so eax at first should=1
