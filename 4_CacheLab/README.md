@@ -6,8 +6,9 @@ you will write a cache simulator in csim.c that takes a valgrind memory trace as
 
 >## Running the autograding 
 >
->#### Before running the autograders, compile your code: linux> make
-*#### Check the correctness of your simulator: linux> ./test-csim
+>#### Before running the autograders,
+>####compile your code: linux> make
+>*#### Check the correctness of your simulator: linux> ./test-csim
 
 
 
