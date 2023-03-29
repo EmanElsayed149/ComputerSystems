@@ -11,5 +11,17 @@ you will write a cache simulator in csim.c that takes a valgrind memory trace as
 >
 >*Check the correctness of your simulator: linux> ./test-csim
 
+#files
+1. CacheLab.pdf : for more details about project
+2. rec07.pdf : contain helpful tools for cache simulator
+3. cachelab-handout : my solution for lab
+     - cachelab.c : helper functions
+     - cachelab.h : header file
+     - csim-ref*  : The executable reference cache simulator
+     - test-csim* : Tests The cache simulator
+     - test-trans.c : Tests The transpose function
+     - tracegen.c : Helper program used by test-trans
+     - traces/ Trace files : used by test-csim.c
+
 
 
