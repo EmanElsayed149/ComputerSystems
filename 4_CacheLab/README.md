@@ -20,8 +20,6 @@ you will write a cache simulator in csim.c that takes a valgrind memory trace as
      - cachelab.h : header file
      - csim-ref*  : The executable reference cache simulator
      - test-csim* : Tests The cache simulator
-     - test-trans.c : Tests The transpose function
-     - tracegen.c : Helper program used by test-trans
      - traces/ Trace files : used by test-csim.c
 
 
