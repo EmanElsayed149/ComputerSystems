@@ -26,7 +26,7 @@ make
 ``` 
 telnet <hostname> <port> 
 ```
-![telnet](/videos/P2.png)
+![telnet][(/videos/P2.png](https://github.com/EmanElsayed149/ComputerSystems/blob/main/TinyServer/videos/P1.png))
 
 ![telnet](/videos/P1.png)
 
