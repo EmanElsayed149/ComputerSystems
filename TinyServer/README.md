@@ -26,16 +26,14 @@ make
 ``` 
 telnet <hostname> <port> 
 ```
-![telnet][(/videos/P2.png](https://github.com/EmanElsayed149/ComputerSystems/blob/main/TinyServer/videos/P1.png))
-
-![telnet](/videos/P1.png)
-
+![picture alt](https://github.com/EmanElsayed149/ComputerSystems/blob/main/TinyServer/videos/P1.png)
+![picture alt](https://github.com/EmanElsayed149/ComputerSystems/blob/main/TinyServer/videos/P2.png)
 
 2- **web browser**
  
-![web browser](/videos/P3.png)
+![web browser](https://github.com/EmanElsayed149/ComputerSystems/blob/main/TinyServer/videos/P3.png)
 
-![web browser](/videos/P4.png)
+![web browser](https://github.com/EmanElsayed149/ComputerSystems/blob/main/TinyServer/videos/P4.png)
 
 ## files
 - cgi-bin/adder : CGI program
